@@ -1264,7 +1264,7 @@ impl BimApp {
         }
         style::follow(&ctx, style::Look { light_canvas: self.light_canvas, compact: self.compact });
         // Chinese needs a font with its glyphs, which the system may not have: then the window stays in English and says why.
-        if self.lang == Lang::Chinese && !lang::use_chinese_font(&ctx, self.font_finder) {
+        if self.lang.is_chinese() && !lang::use_chinese_font(&ctx, self.font_finder) {
             self.lang = Lang::English;
             self.status = updates::failed(t(lang::NO_CHINESE_FONT).to_string());
         }

@@ -16,7 +16,7 @@ fn visibility_graphics_sorts_categories_in_each_interface_language() {
     use crate::lang::{self, Lang};
     use bimcraft_core::graphics::{ANNOTATION, MODEL, SCANS};
     let mut h = app(BOX);
-    for language in [Lang::Portuguese, Lang::Spanish, Lang::Chinese] {
+    for language in [Lang::Portuguese, Lang::Spanish, Lang::Chinese, Lang::ChineseTraditional] {
         crate::lang::assume_chinese_font(&h.ctx);
         h.state_mut().lang = language;
         shortcut(&mut h, "VV");

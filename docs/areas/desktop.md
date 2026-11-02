@@ -62,14 +62,16 @@ request wakes the window (`Context::request_repaint`, from the context the first
 most; ten seconds, in all, to say the first line whole (a byte now and then does not count), and what is not a request, a web page's
 HTTP say, is answered with an error and closed. A test (`tests/control.rs`) plays the agent on a real connection while the harness runs frames.
 
-The interface's language is `lang::Lang`: a project's language, or Simplified Chinese (issue 38), which only the window speaks
-(a drawing's lettering, `font.rs`, is drawn in code and has no hanzi, so a project is never in Chinese and `Lang::project()` gives
-it English). Its words, including the schedule headings shown in the window, are in `translations/ui/*.po`;
-missing or unfinished translations show English. Project text has separate catalogs; see [translations](translations.md).
+The interface's language is `lang::Lang`: a project's language, or Chinese in its Simplified or Traditional script (issue 38),
+which only the window speaks (a drawing's lettering, `font.rs`, is drawn in code and has no hanzi, so a project is never in
+Chinese and `Lang::project()` gives it English). Its words, including the schedule headings shown in the window, are in
+`translations/ui/*.po` (`zh.po` and `zh_TW.po` for the two scripts); missing or unfinished translations show English. Project
+text has separate catalogs; see [translations](translations.md).
 egui's own fonts have no hanzi, so the window in Chinese needs a font the system has: `lang::use_chinese_font` puts one behind egui's
-(`lang/font.rs` tries each system's known places, then the Linux font folders, taking Noto Sans CJK's Simplified face) the first frame the
-language is Chinese. Where there is none, `set_lang` leaves the language as it was and the status says why, and a settings file that says
-Chinese on such a machine starts the window in English. The app holds the finder (`font_finder`) so a test can say there is none.
+(`lang/font.rs` tries each system's known places, then the Linux font folders, taking Noto Sans CJK's Simplified face, which holds
+both scripts' characters) the first frame the language is Chinese. Where there is none, `set_lang` leaves the language as it was and
+the status says why, and a settings file that says Chinese on such a machine starts the window in English. The app holds the finder
+(`font_finder`) so a test can say there is none.
 
 What a view hides or reveals for now (Temporary Hide/Isolate, Reveal Hidden Elements; `footer.rs`) is the window's, per `Sheet`, never the
 project's: the plan, the section and the 3D view draw `BimApp::view_model`, a copy of the model whose view graphics went through the `graphics`

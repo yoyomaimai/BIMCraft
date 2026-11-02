@@ -356,7 +356,7 @@ fn an_import_says_one_pattern_in_the_singular_and_keeps_the_reason_a_pattern_was
 #[test]
 fn a_solid_fill_is_told_solid_in_portuguese_and_spanish_not_as_a_continuous_line() {
     use crate::lang::{Lang, translated_in};
-    for l in [Lang::Portuguese, Lang::Spanish, Lang::Chinese] {
+    for l in [Lang::Portuguese, Lang::Spanish, Lang::Chinese, Lang::ChineseTraditional] {
         let mut h = app(BOX);
         crate::lang::assume_chinese_font(&h.ctx);
         h.state_mut().lang = l;

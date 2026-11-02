@@ -1,4 +1,5 @@
-//! The interface in Simplified Chinese (issue 38). No test draws a glyph: a window is told it has a font, or that it has none.
+//! The interface in Simplified and Traditional Chinese (issue 38). No test draws a glyph: a window is told it has a font, or
+//! that it has none.
 
 use super::*;
 use crate::lang::{self, Lang};
@@ -61,6 +62,25 @@ fn without_a_font_for_hanzi_the_window_stays_as_it_was_and_says_why() {
     let ctx = pt.ctx.clone();
     pt.state_mut().set_lang(&ctx, Lang::Chinese);
     assert!(pt.state().status.text.starts_with("Nenhuma fonte com caracteres chineses"), "{:?}", pt.state().status);
+}
+
+#[test]
+fn the_language_list_offers_traditional_chinese_and_picking_it_puts_the_window_in_it() {
+    let mut h = app(BOX);
+    lang::assume_chinese_font(&h.ctx);
+    h.key_press_modifiers(Modifiers::COMMAND, Key::Comma);
+    h.run();
+    h.get_all_by_role(Role::ComboBox).find(|n| n.value().as_deref() == Some("English")).expect("the language list").click();
+    h.run();
+    h.get_by_label("Chinese (Traditional)").click();
+    h.run();
+    assert_eq!(h.state().lang, Lang::ChineseTraditional);
+    for word in ["檔案", "建築", "註釋", "體量建模", "視圖", "管理", "修改"] {
+        assert!(h.query_all_by_label(word).next().is_some(), "the ribbon's tab `{word}`");
+    }
+    assert!(h.query_by_label("Architecture").is_none());
+    // The list shows its name in itself once the window can draw it.
+    assert!(h.get_all_by_role(Role::ComboBox).any(|n| n.value().as_deref() == Some("繁體中文")));
 }
 
 #[test]

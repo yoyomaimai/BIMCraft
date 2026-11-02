@@ -204,7 +204,7 @@ impl BimApp {
     /// Puts the interface in `lang`. Chinese needs a font with its glyphs: where the system has none the language stays as it was, and
     /// the status says why.
     pub(crate) fn set_lang(&mut self, ctx: &Context, lang: Lang) {
-        if lang == Lang::Chinese && !crate::lang::use_chinese_font(ctx, self.font_finder) {
+        if lang.is_chinese() && !crate::lang::use_chinese_font(ctx, self.font_finder) {
             self.status = failed(t(crate::lang::NO_CHINESE_FONT).to_string());
         } else {
             self.lang = lang;
